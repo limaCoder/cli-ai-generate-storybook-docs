@@ -1,8 +1,9 @@
 import { Command } from "commander";
 import chalk from "chalk";
+
+import { generateMdxWithAI } from "../generator/mdxGeneratorWithAi.js";
+import { generatePropsWithAI } from "../generator/propsGeneratorWithAi.js";
 import { readComponentFile } from "../utils/fileReader.js";
-import { generateMdxFile } from "../generator/mdxGenerator.js";
-import { generatePropsFile } from "../generator/propsGenerator.js";
 
 const program = new Command();
 
@@ -20,11 +21,11 @@ program
   .action(async (componentPath) => {
     try {
       const componentCode = await readComponentFile(componentPath);
-      const componentName = componentPath.split("/").pop();
+      const componentName = componentPath.split("/").pop()?.split(".")[0];
 
       if (componentName) {
-        await generateMdxFile(componentName, componentCode);
-        await generatePropsFile(componentName);
+        await generateMdxWithAI(componentCode, componentName);
+        await generatePropsWithAI(componentCode, componentName);
         console.log(
           chalk.green(
             `Documentação gerada com sucesso para o componente: ${componentName}`

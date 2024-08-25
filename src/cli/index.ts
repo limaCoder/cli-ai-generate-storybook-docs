@@ -1,8 +1,8 @@
 import { Command } from "commander";
 import chalk from "chalk";
 
-import { generateMdxWithAI } from "../generator/mdxGeneratorWithAi.js";
-import { generatePropsWithAI } from "../generator/propsGeneratorWithAi.js";
+import { generateMdxWithAI } from "../commands/actions/mdxGeneratorWithAi.js";
+import { generatePropsWithAI } from "../commands/actions/propsGeneratorWithAi.js";
 import { readComponentFile } from "../utils/fileReader.js";
 
 const program = new Command();

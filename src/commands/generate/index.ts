@@ -6,12 +6,18 @@ import { generateMdxWithAI } from "./actions/mdxGeneratorWithAi.js";
 import { generatePropsWithAI } from "./actions/propsGeneratorWithAi.js";
 import { cancelPrompt } from "../../utils/cancelPrompt.js";
 import { errorCatcher } from "../../utils/errorCatcher.js";
+import { globalConfig } from "../../constants/conf.js";
+import { ApiKeyNames, ApiKeyNamesEnum } from "../../constants/apiKeyNames.js";
 
 export async function generateDocs() {
   try {
     intro("Bem vindo ao gerador de documentação Storybook CLI Generate Docs!");
 
-    if (!process.env.OPENAI_API_KEY) {
+    const apiKey = globalConfig.get(
+      ApiKeyNames[ApiKeyNamesEnum.OPENAI_API_KEY]
+    );
+
+    if (!apiKey) {
       console.log(
         chalk.red(
           `Antes de rodar o comando para gerar as documentações de seus componentes, é necessário primeiro que seja feita uma autenticação com os serviços da OpenAI. Para realizar a autenticação, rode o comando: ${chalk.bgYellow(

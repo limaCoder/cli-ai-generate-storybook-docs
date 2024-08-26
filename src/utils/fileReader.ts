@@ -1,9 +1,10 @@
 import { promises as fs } from "fs";
 import path from "path";
+import { errorCatcher } from "./errorCatcher.js";
 
 export async function readComponentFile(
   componentPath: string
-): Promise<string> {
+): Promise<string | undefined> {
   let fullPath = path.resolve(componentPath);
 
   try {
@@ -26,7 +27,7 @@ export async function readComponentFile(
 
     const data = await fs.readFile(fullPath, "utf-8");
     return data;
-  } catch (error: any) {
-    throw new Error(`Erro ao ler o arquivo do componente: ${error.message}`);
+  } catch (error: unknown) {
+    errorCatcher(error, "Erro ao ler o arquivo do componente");
   }
 }

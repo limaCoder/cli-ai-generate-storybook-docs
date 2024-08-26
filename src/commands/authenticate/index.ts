@@ -1,6 +1,6 @@
 import { intro } from "@clack/prompts";
 import { getOpenAIKey } from "./actions/getApiKey.js";
-import chalk from "chalk";
+import { errorCatcher } from "../../utils/errorCatcher.js";
 
 export async function authenticateUser() {
   try {
@@ -9,7 +9,7 @@ export async function authenticateUser() {
     );
 
     await getOpenAIKey();
-  } catch (error: any) {
-    console.error(chalk.red(error.message));
+  } catch (error: unknown) {
+    errorCatcher(error, "Erro ao autenticar");
   }
 }

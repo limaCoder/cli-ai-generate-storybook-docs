@@ -1,12 +1,13 @@
 import path from "path";
 import { promises as fs } from "fs";
-
 import { generateText } from "ai";
+
 import { openaiInstance } from "../../../lib/openai/config.js";
 import { Prompt } from "../../../utils/prompt.js";
+import { errorCatcher } from "../../../utils/errorCatcher.js";
 
 export async function generateMdxWithAI(
-  componentCode: string,
+  componentCode: string | undefined,
   componentName: string
 ): Promise<void> {
   const prompt = Prompt.generateMdxPrompt(componentName, componentCode);
@@ -32,8 +33,7 @@ export async function generateMdxWithAI(
     await fs.writeFile(mdxPath, mdxContent, "utf-8");
 
     console.log(`Arquivo MDX gerado em ${mdxPath}`);
-  } catch (error: any) {
-    console.error(`Erro ao gerar o conteúdo com IA: ${error.message}`);
-    process.exit(0);
+  } catch (error: unknown) {
+    errorCatcher(error, "Erro ao gerar o conteúdo com IA");
   }
 }

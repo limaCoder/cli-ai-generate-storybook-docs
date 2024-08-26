@@ -1,7 +1,7 @@
 export class Prompt {
   static generateMdxPrompt(
     componentName: string,
-    componentCode: string
+    componentCode: string | undefined
   ): string {
     const styleBlock = `
       <style>
@@ -82,7 +82,7 @@ export class Prompt {
 
   static generatePropsPrompt(
     componentName: string,
-    componentCode: string
+    componentCode: string | undefined
   ): string {
     return `
       Gere o arquivo de propriedades para o componente "${componentName}" no formato TypeScript, seguindo exatamente o formato abaixo e sem adicionar comentários adicionais ou resumos:

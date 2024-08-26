@@ -1,12 +1,13 @@
 import path from "path";
 import { promises as fs } from "fs";
-
 import { generateText } from "ai";
+
 import { openaiInstance } from "../../../lib/openai/config.js";
 import { Prompt } from "../../../utils/prompt.js";
+import { errorCatcher } from "../../../utils/errorCatcher.js";
 
 export async function generatePropsWithAI(
-  componentCode: string,
+  componentCode: string | undefined,
   componentName: string
 ): Promise<void> {
   const prompt = Prompt.generatePropsPrompt(componentName, componentCode);
@@ -33,8 +34,7 @@ export async function generatePropsWithAI(
     });
     await fs.writeFile(propsPath, propsContent, "utf-8");
     console.log(`Arquivo de propriedades gerado em: ${propsPath}`);
-  } catch (error: any) {
-    console.error(`Erro ao gerar as propriedades com IA: ${error.message}`);
-    process.exit(0);
+  } catch (error: unknown) {
+    errorCatcher(error, "Erro ao gerar as propriedades com IA");
   }
 }

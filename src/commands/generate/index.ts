@@ -1,9 +1,11 @@
-import { cancel, intro, isCancel, spinner, text } from "@clack/prompts";
+import { intro, isCancel, spinner, text } from "@clack/prompts";
 import chalk from "chalk";
+
 import { readComponentFile } from "../../utils/fileReader.js";
 import { generateMdxWithAI } from "./actions/mdxGeneratorWithAi.js";
 import { generatePropsWithAI } from "./actions/propsGeneratorWithAi.js";
 import { cancelPrompt } from "../../utils/cancelPrompt.js";
+import { errorCatcher } from "../../utils/errorCatcher.js";
 
 export async function generateDocs() {
   try {
@@ -60,7 +62,7 @@ export async function generateDocs() {
         chalk.red("Não foi possível determinar o nome do componente.")
       );
     }
-  } catch (error: any) {
-    console.error(chalk.red(error.message));
+  } catch (error: unknown) {
+    errorCatcher(error, "Error ao gerar documentação");
   }
 }

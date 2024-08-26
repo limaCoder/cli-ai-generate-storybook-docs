@@ -1,3 +1,5 @@
+import { removeBackticksFromAnswer } from "./prompt-instructions.js";
+
 export class Prompt {
   static generateMdxPrompt(
     componentName: string,
@@ -76,7 +78,7 @@ export class Prompt {
 
       ${codeBlock}
 
-      Gere exclusivamente o código MDX conforme especificado no padrão acima. **Não adicione comentários, resumos, ou qualquer texto adicional.** Apenas o código solicitado deve ser retornado. Os conteúdos das seções devem ser geradas dinamicamente com base no código lido, como as seções de subtítulo, de objetivo e na utilização do componente também. Preencha o conteúdo de texto dessas seções, não é para manter o texto que está aqui na instrução do prompt, e sim para preencher com base no código lido. A seção de funcionalidades deve ser gerada dinamicamente com base no código do componente lido, e cada funcionalidade deve ser separada em uma nova linha dentro de uma div com a classe "row". Não inclua o código do componente no MDX final e remova o bloco desnecessário de \`mdx\` ao redor do código.
+      Gere exclusivamente o código MDX conforme especificado no padrão acima. **Não adicione comentários, resumos, ou qualquer texto adicional.** Apenas o código solicitado deve ser retornado. Os conteúdos das seções devem ser geradas dinamicamente com base no código lido, como as seções de subtítulo, de objetivo e na utilização do componente também. Preencha o conteúdo de texto dessas seções, não é para manter o texto que está aqui na instrução do prompt, e sim para preencher com base no código lido. A seção de funcionalidades deve ser gerada dinamicamente com base no código do componente lido, e cada funcionalidade deve ser separada em uma nova linha dentro de uma div com a classe "row". Não inclua o código do componente no MDX final. ${removeBackticksFromAnswer}.
     `;
   }
 
@@ -85,7 +87,7 @@ export class Prompt {
     componentCode: string | undefined
   ): string {
     return `
-      Gere o arquivo de propriedades para o componente "${componentName}" no formato TypeScript, seguindo exatamente o formato abaixo e sem adicionar comentários adicionais ou resumos:
+      Gere o arquivo de propriedades para o componente "${componentName}" no formato TypeScript, seguindo exatamente o formato abaixo e sem adicionar comentários adicionais ou resumos ${removeBackticksFromAnswer}:
 
       export const ${componentName.toLowerCase()}PropsInfo = {
         backgroundColor: {

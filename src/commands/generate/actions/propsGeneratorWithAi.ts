@@ -2,8 +2,8 @@ import path from "path";
 import { promises as fs } from "fs";
 
 import { generateText } from "ai";
-import { openaiInstance } from "../../lib/openai/config.js";
-import { Prompt } from "../../utils/prompt.js";
+import { openaiInstance } from "../../../lib/openai/config.js";
+import { Prompt } from "../../../utils/prompt.js";
 
 export async function generatePropsWithAI(
   componentCode: string,

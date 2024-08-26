@@ -4,6 +4,7 @@ import chalk from "chalk";
 import { generateMdxWithAI } from "../commands/actions/mdxGeneratorWithAi.js";
 import { generatePropsWithAI } from "../commands/actions/propsGeneratorWithAi.js";
 import { readComponentFile } from "../utils/fileReader.js";
+import { cancel, intro, isCancel, spinner, text } from "@clack/prompts";
 
 const program = new Command();
 
@@ -17,15 +18,42 @@ program
 program
   .command("generate")
   .description("Gera as Docs MDX para um componente específico.")
-  .argument("<component-path>", "O caminho do componente a ser documentado.")
-  .action(async (componentPath) => {
+  .action(async () => {
     try {
-      const componentCode = await readComponentFile(componentPath);
-      const componentName = componentPath.split("/").pop()?.split(".")[0];
+      intro(
+        "Bem vindo ao gerador de documentação Storybook CLI Generate Docs!"
+      );
+
+      const componentPath = await text({
+        message: "Informe o caminho do componente:",
+        placeholder: "Ex: src/components/Button",
+        validate(value) {
+          if (value.trim() === "")
+            return "O caminho do componente não pode estar vazio.";
+        },
+      });
+
+      if (isCancel(componentPath)) {
+        cancel("Operação cancelada.");
+        process.exit(0);
+      }
+
+      const componentPathSerialized = String(componentPath);
+
+      const componentCode = await readComponentFile(componentPathSerialized);
+      const componentName = componentPathSerialized
+        .split("/")
+        .pop()
+        ?.split(".")[0];
 
       if (componentName) {
+        const loading = spinner();
+
+        loading.start("Gerando arquivos...");
         await generateMdxWithAI(componentCode, componentName);
         await generatePropsWithAI(componentCode, componentName);
+        loading.stop("Arquivos gerados");
+
         console.log(
           chalk.green(
             `Documentação gerada com sucesso para o componente: ${componentName}`

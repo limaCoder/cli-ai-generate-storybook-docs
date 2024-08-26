@@ -1,8 +1,9 @@
-import { text, isCancel, cancel, spinner } from "@clack/prompts";
+import { text, isCancel, spinner } from "@clack/prompts";
 import chalk from "chalk";
 
 import { validateOpenAIKey } from "../../../helpers/validateApiKey.js";
 import { saveAPIKeyToEnv } from "../../../utils/saveAPIKeyToEnv.js";
+import { cancelPrompt } from "../../../utils/cancelPrompt.js";
 
 export async function getOpenAIKey(): Promise<string | null> {
   const secretKeyName = "OPENAI_API_KEY";
@@ -15,14 +16,15 @@ export async function getOpenAIKey(): Promise<string | null> {
   });
 
   if (isCancel(apiKey)) {
-    cancel("Operação cancelada.");
-    process.exit(0);
+    cancelPrompt();
   }
+
+  const apiKeySerialized = String(apiKey);
 
   const loading = spinner();
 
   loading.start("Verificando se a chave fornecida é válida...");
-  const isValid = await validateOpenAIKey(apiKey);
+  const isValid = await validateOpenAIKey(apiKeySerialized);
   loading.stop("Verificação concluída!");
 
   if (!isValid) {
@@ -32,6 +34,6 @@ export async function getOpenAIKey(): Promise<string | null> {
     process.exit(0);
   }
 
-  saveAPIKeyToEnv(secretKeyName, apiKey);
-  return apiKey;
+  saveAPIKeyToEnv(secretKeyName, apiKeySerialized);
+  return apiKeySerialized;
 }

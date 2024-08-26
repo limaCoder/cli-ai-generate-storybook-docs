@@ -3,6 +3,7 @@ import chalk from "chalk";
 import { readComponentFile } from "../../utils/fileReader.js";
 import { generateMdxWithAI } from "./actions/mdxGeneratorWithAi.js";
 import { generatePropsWithAI } from "./actions/propsGeneratorWithAi.js";
+import { cancelPrompt } from "../../utils/cancelPrompt.js";
 
 export async function generateDocs() {
   try {
@@ -30,8 +31,7 @@ export async function generateDocs() {
     });
 
     if (isCancel(componentPath)) {
-      cancel("Operação cancelada.");
-      process.exit(0);
+      cancelPrompt();
     }
 
     const componentPathSerialized = String(componentPath);

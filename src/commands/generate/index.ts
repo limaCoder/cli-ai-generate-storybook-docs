@@ -15,7 +15,7 @@ export async function generateDocs() {
       console.log(
         chalk.red(
           `Antes de rodar o comando para gerar as documentações de seus componentes, é necessário primeiro que seja feita uma autenticação com os serviços da OpenAI. Para realizar a autenticação, rode o comando: ${chalk.bgYellow(
-            "npm start authenticate"
+            "authenticate"
           )}`
         )
       );

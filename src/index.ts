@@ -1,11 +1,13 @@
+#!/usr/bin/env node
+
 import { Command } from "commander";
-import { generateDocs } from "../commands/generate/index.js";
-import { authenticateUser } from "../commands/authenticate/index.js";
+import { generateDocs } from "./commands/generate/index.js";
+import { authenticateUser } from "./commands/authenticate/index.js";
 
 const program = new Command();
 
 program
-  .name("storybook-docs-cli")
+  .name("ai-generate-storybook-docs-cli")
   .description(
     "CLI para gerar automaticamente as Docs MDX dos componentes do Storybook."
   )

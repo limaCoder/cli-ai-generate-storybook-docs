@@ -13,7 +13,7 @@ AI Generate Storybook Docs CLI é uma ferramenta poderosa para gerar automaticam
 Você pode instalar a CLI via npm:
 
 ```bash
-npm install -g storybook-docs-cli
+npm install -g ai-generate-storybook-docs-cli
 ```
 
 ## Uso
@@ -23,7 +23,7 @@ npm install -g storybook-docs-cli
 Antes de gerar a documentação, você precisa se autenticar com a OpenAI:
 
 ```bash
-storybook-docs-cli authenticate
+ai-generate-storybook-docs-cli authenticate
 ```
 
 Será solicitado que você insira sua OpenAI API Key. A chave será validada e salva localmente para uso futuro.
@@ -33,7 +33,7 @@ Será solicitado que você insira sua OpenAI API Key. A chave será validada e s
 Após a autenticação, você pode gerar a documentação MDX para um componente específico:
 
 ```bash
-storybook-docs-cli generate
+ai-generate-storybook-docs-cli generate
 ```
 
 O comando solicitará que você forneça o caminho para o componente que deseja documentar. Em seguida, a documentação MDX será gerada automaticamente.

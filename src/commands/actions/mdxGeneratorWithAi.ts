@@ -33,6 +33,7 @@ export async function generateMdxWithAI(
 
     console.log(`Arquivo MDX gerado em ${mdxPath}`);
   } catch (error: any) {
-    throw new Error(`Erro ao gerar o conteúdo com IA: ${error.message}`);
+    console.error(`Erro ao gerar o conteúdo com IA: ${error.message}`);
+    process.exit(0);
   }
 }

@@ -34,6 +34,7 @@ export async function generatePropsWithAI(
     await fs.writeFile(propsPath, propsContent, "utf-8");
     console.log(`Arquivo de propriedades gerado em: ${propsPath}`);
   } catch (error: any) {
-    throw new Error(`Erro ao gerar as propriedades com IA: ${error.message}`);
+    console.error(`Erro ao gerar as propriedades com IA: ${error.message}`);
+    process.exit(0);
   }
 }
